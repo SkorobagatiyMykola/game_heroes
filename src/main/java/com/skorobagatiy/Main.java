@@ -1,49 +1,73 @@
 package com.skorobagatiy;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
+import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+
+
+import static java.util.concurrent.TimeUnit.SECONDS;
 
 public class Main {
+    private static final Logger logger = LogManager.getLogger(Main.class);
     private static String URL ="https://www.heroeswm.ru/";
 
-    private WebDriver webDriver;
+    private static WebDriver webDriver;
     private static String login ="Norwagia";
     private static String pass ="Nick_1805";
-    public static void main(String[] args) {
 
-//        System.out.println("Hello world!");
-//
-//        //System.setProperty("webdriver.chrome.driver", "path of driver");
-//        System.setProperty("webdriver.chrome.driver", ConfProperties.getProperty("chromedriver"));
-//
-//        WebDriver driver=new ChromeDriver();
-//        driver.manage().window().maximize();
-//        driver.get(URL);
-//        // <input name="login" type="text" maxlength="18" class="inp_login" title="Логин в игре" value="Имя персонажа" onfocus="clearLogin();">
-//
-//        WebElement username=driver.findElement(By.id("login"));
-//        WebElement password=driver.findElement(By.id("pass"));
-//
-//        username.sendKeys(login);
-//        password.sendKeys(pass);
-//
-//        // /html/body/form/table/tbody/tr[1]/td[2]/table/tbody/tr[2]/td[1]/table[2]/tbody/tr/td/div/input
-//        WebElement btn=driver.findElement(By.xpath("/html/body/form/table/tbody/tr[1]/td[2]/table/tbody/tr[2]/td[1]/table[2]/tbody/tr/td/div/input"));
-//        // <input type="image" src="https://dcdn1.heroeswm.ru/i/index2012/enter0.jpg" title="Войти в игру!">
-//        //WebElement login=driver.findElement(By.name("commit"));
-//
-//        btn.click();
+    static {
+        WebDriverManager.firefoxdriver().setup();
+    }
+    public static void main(String[] args) {
+        setUp();
+
+        try {
+            webDriver.get(URL);
+
+            // WebElement userField = webDriver.findElement(By.xpath("//input[@class=\"form-field-input\"]"));
+            // WebElement button = webDriver.findElement(By.xpath("//button[@class=\"btn btn-red\"]"));
+            WebElement userLogin = webDriver.findElement(By.xpath("//input[@class=\"login\"]"));
+            WebElement userPass = webDriver.findElement(By.xpath("//input[@class=\"pass\"]"));
+            WebElement button = webDriver.findElement(By.xpath("//input[@class=\"entergame\"]"));
+
+            userLogin.sendKeys(login);
+            userPass.sendKeys(pass);
+
+            button.click();
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
 
     }
 
-    private WebDriver buildFirefoxWebDriver() {
+    private static void setUp() {
 
-//        FirefoxOptions options = new FirefoxOptions()
-//                .setHeadless(true);
+        try {
+            webDriver = buildFirefoxWebDriver();
+        } catch (Exception e) {
+            logger.error("Failed to start the browser: " + e.getMessage());
+            throw e;
+        }
+
+//        int timeout = timeoutInSecondsProvider.get();
+//        // https://www.seleniumhq.org/docs/04_webdriver_advanced.jsp#implicit-waits
+//        webDriver.manage().timeouts().implicitlyWait(timeout, SECONDS);
+//        // https://www.seleniumhq.org/docs/04_webdriver_advanced.jsp#explicit-waits
+//        wait = new WebDriverWait(webDriver, timeout);
+    }
+    private static WebDriver buildFirefoxWebDriver() {
+
+        FirefoxOptions options = new FirefoxOptions()
+                .setHeadless(true);
 
         return new FirefoxDriver(options);
     }
