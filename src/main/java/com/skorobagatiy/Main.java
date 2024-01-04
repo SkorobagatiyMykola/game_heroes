@@ -1,7 +1,6 @@
 package com.skorobagatiy;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -12,11 +11,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 
-
-import static java.util.concurrent.TimeUnit.SECONDS;
-
 public class Main {
-    private static final Logger logger = LogManager.getLogger(Main.class);
     private static String URL ="https://www.heroeswm.ru/";
 
     private static WebDriver webDriver;
@@ -41,6 +36,8 @@ public class Main {
             userLogin.sendKeys(login);
             userPass.sendKeys(pass);
 
+            System.out.println("256516");
+
             button.click();
 
         } catch (Exception e) {
@@ -54,7 +51,7 @@ public class Main {
         try {
             webDriver = buildFirefoxWebDriver();
         } catch (Exception e) {
-            logger.error("Failed to start the browser: " + e.getMessage());
+          //  logger.error("Failed to start the browser: " + e.getMessage());
             throw e;
         }
 
@@ -67,7 +64,7 @@ public class Main {
     private static WebDriver buildFirefoxWebDriver() {
 
         FirefoxOptions options = new FirefoxOptions()
-                .setHeadless(true);
+                .setHeadless(false);
 
         return new FirefoxDriver(options);
     }
