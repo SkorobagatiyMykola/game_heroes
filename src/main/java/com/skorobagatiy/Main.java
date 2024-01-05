@@ -12,9 +12,10 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 
 public class Main {
+    private static WebDriver webDriver;
     private static String URL ="https://www.heroeswm.ru/";
 
-    private static WebDriver webDriver;
+
     private static String login ="Norwagia";
     private static String pass ="Nick_1805";
 
@@ -63,8 +64,8 @@ public class Main {
     }
     private static WebDriver buildFirefoxWebDriver() {
 
-        FirefoxOptions options = new FirefoxOptions()
-                .setHeadless(false);
+        FirefoxOptions options = new FirefoxOptions();
+                //.setHeadless(false);
 
         return new FirefoxDriver(options);
     }
