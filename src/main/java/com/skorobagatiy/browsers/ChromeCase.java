@@ -11,6 +11,7 @@ import java.time.Duration;
 public class ChromeCase {
     private static String URL = "https://www.heroeswm.ru/";
     private static String obj_URL = "https://www.heroeswm.ru/object-info.php?id=312";
+    private static String obj2_URL = "https://www.heroeswm.ru/object-info.php?id=312";
 
     private static String login = "Norwagia";
     private static String pass = "Nick_1805";
