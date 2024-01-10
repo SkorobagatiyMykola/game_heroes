@@ -12,3 +12,4 @@ timeout 3683
 java -jar game_heroes.jar
 timeout 3694
 java -jar game_heroes.jar
+echo THE END
